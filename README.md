@@ -1,6 +1,6 @@
 # 🚀 算法学习项目 (Algorithm Learning Project)
 
-[![Java](https://img.shields.io/badge/Java-11+-orange.svg)](https://www.oracle.com/java/)
+[![Java](https://img.shields.io/badge/Java-8+-orange.svg)](https://www.oracle.com/java/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/nightsleon/algorithm.svg)](https://github.com/nightsleon/algorithm)
 [![Forks](https://img.shields.io/github/forks/nightsleon/algorithm.svg)](https://github.com/nightsleon/algorithm)
