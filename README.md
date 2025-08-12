@@ -132,7 +132,7 @@ src/com/algo/
 
 ## 🛠️ 环境要求
 
-- **Java**: JDK 11 或更高版本
+- **Java**: JDK 8 或更高版本
 - **IDE**: IntelliJ IDEA, Eclipse, VS Code 等
 - **构建工具**: Maven 或 Gradle (可选)
 
