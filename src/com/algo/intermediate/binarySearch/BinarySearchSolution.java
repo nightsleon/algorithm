@@ -1,4 +1,4 @@
-package com.algo.intermediate.binarySearch;
+package com.algo.intermediate.binarysearch;
 /**
  * 难度级别: Intermediate
  * 分类: Binarysearch

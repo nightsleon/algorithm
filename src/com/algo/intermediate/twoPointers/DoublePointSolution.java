@@ -1,10 +1,11 @@
-package com.algo.intermediate.twoPointers;
+package com.algo.intermediate.twopointers;
 
 import java.util.*;
+
 /**
  * 难度级别: Intermediate
  * 分类: Twopointers
- * 
+ *
  * @author liangjun
  **/
 public class DoublePointSolution {
@@ -102,6 +103,7 @@ public class DoublePointSolution {
      * 11. 盛最多水的容器
      * <p>
      * 给定一个长度为 n 的整数数组 height 。有 n 条垂线，第 i 条线的两个端点是 (i, 0) 和 (i, height[i]) 。
+     * 找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。
      */
     public int maxArea(int[] height) {
         // 处理边界
@@ -113,12 +115,15 @@ public class DoublePointSolution {
         int left = 0, right = height.length - 1;
         // 木桶效应，接到的雨水是按照低的来计算
         while (left < right) {
+            // 计算当前容器的面积
+            int area = Math.min(height[left], height[right]) * (right - left);
+            // 更新最大面积
+            max = Math.max(max, area);
+            // 移动较短的柱子（木桶效应）
             if (height[left] < height[right]) {
-                max = Math.max(max, height[left] * (right - left));
                 // 左侧柱子低，左指针右移动
                 left++;
             } else {
-                max = Math.max(max, height[right] * (right - left));
                 // 右侧柱子低，右指针左移动
                 right--;
             }
@@ -128,9 +133,9 @@ public class DoublePointSolution {
 
     /**
      * 42. 接雨水
-     * 1.	双指针法：左右指针从数组的两端向中间移动。
-     * 2.	记录左右最大高度：highestL 和 highestR 分别记录左侧和右侧柱子的最大高度。
-     * 3.	雨水计算：当前柱子能够接到的雨水量 = 左/右侧最大高度 - 当前柱子的高度。
+     * 1. 双指针法：左右指针从数组的两端向中间移动。
+     * 2. 记录左右最大高度：highestL 和 highestR 分别记录左侧和右侧柱子的最大高度。
+     * 3. 雨水计算：当前柱子能够接到的雨水量 = 左/右侧最大高度 - 当前柱子的高度。
      */
     public int trap(int[] height) {
         // 处理边界
@@ -160,16 +165,21 @@ public class DoublePointSolution {
 
     /**
      * 15. 三数之和
-     * 1.	排序：
-     * •	先对数组进行排序，便于后续去重和双指针操作。
-     * 2.	遍历数组：
-     * •	固定一个数 nums[i]，然后用双指针 left 和 right 在剩余部分查找满足条件的两个数。
-     * 3.	双指针查找：
-     * •	如果三数之和小于 0，移动左指针增加总和。
-     * •	如果三数之和大于 0，移动右指针减小总和。
-     * •	如果等于 0，则记录当前三元组，并移动指针跳过重复元素。
-     * 4.	去重：
-     * •	排序后可以直接跳过重复的数以避免结果重复。
+     * <p>
+     * 给你一个整数数组 nums ，判断是否存在三元组 [nums[i], nums[j], nums[k]] 满足 i != j、i != k 且 j !=
+     * k ，同时还满足 nums[i] + nums[j] + nums[k] == 0 。
+     * 请你返回所有和为 0 且不重复的三元组。
+     * <p>
+     * 1. 排序：
+     * • 先对数组进行排序，便于后续去重和双指针操作。
+     * 2. 遍历数组：
+     * • 固定一个数 nums[i]，然后用双指针 left 和 right 在剩余部分查找满足条件的两个数。
+     * 3. 双指针查找：
+     * • 如果三数之和小于 0，移动左指针增加总和。
+     * • 如果三数之和大于 0，移动右指针减小总和。
+     * • 如果等于 0，则记录当前三元组，并移动指针跳过重复元素。
+     * 4. 去重：
+     * • 排序后可以直接跳过重复的数以避免结果重复。
      */
     public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
@@ -221,14 +231,16 @@ public class DoublePointSolution {
     /**
      * 209. 长度最小的子数组
      * <p>
+     * 找出满足其和大于等于目标值的最短子数组长度
+     * <p>
      * 给定一个含有 n 个正整数的数组和一个正整数 target 。
      * 找出该数组中满足其总和大于等于 target 的长度最小的子数组
      * [numsl, numsl+1, ..., numsr-1, numsr] ，并返回其长度。如果不存在符合条件的子数组，返回 0 。
      * <p>
-     * 1.	滑动窗口：右指针不断移动来扩大窗口，左指针在满足条件时缩小窗口以找到最短的子数组。
-     * 2.	累加和：不断累加当前窗口内的元素，判断其是否大于等于目标值。
-     * 3.	条件收缩：当窗口的累加和大于或等于目标值时，计算子数组长度，并尝试通过移动左边界缩小窗口。
-     * 4.	返回值：如果没有找到符合条件的子数组，返回 0，否则返回最小长度。
+     * 1. 滑动窗口：右指针不断移动来扩大窗口，左指针在满足条件时缩小窗口以找到最短的子数组。
+     * 2. 累加和：不断累加当前窗口内的元素，判断其是否大于等于目标值。
+     * 3. 条件收缩：当窗口的累加和大于或等于目标值时，计算子数组长度，并尝试通过移动左边界缩小窗口。
+     * 4. 返回值：如果没有找到符合条件的子数组，返回 0，否则返回最小长度。
      */
     public int minSubArrayLen(int target, int[] nums) {
         // 处理边界
@@ -258,28 +270,30 @@ public class DoublePointSolution {
      * 3. 无重复字符的最长子串
      * a.变量说明：
      * <ul>
-     *   <li><b>left：</b>左指针</li>
-     *   <li><b>right：</b>右指针</li>
-     *   <li><b>set：</b>遍历过的元素集合</li>
-     *   <li><b>max：</b>最长字符串</li>
+     * <li><b>left：</b>左指针</li>
+     * <li><b>right：</b>右指针</li>
+     * <li><b>set：</b>遍历过的元素集合</li>
+     * <li><b>max：</b>最长字符串</li>
      * </ul>
      * <p>
      * b.核心逻辑：
-     * <p><b>对字符串进行遍历</b></p>
+     * <p>
+     * <b>对字符串进行遍历</b>
+     * </p>
      * <ul>
-     *   <li><b>情况 1：不存在重复元素</b>
-     *     <ul>
-     *       <li>1.1 将已遍历过的元素添加到集合中</li>
-     *       <li>1.2 向右扩展窗口，即 right 指针递增</li>
-     *       <li>1.3 计算最大长度，更新为 max = Math.max(max, right - left)</li>
-     *     </ul>
-     *   </li>
-     *   <li><b>情况 2：存在重复元素</b>
-     *     <ul>
-     *       <li>2.1 从集合中删除已遍历过的元素，直到不存在重复元素</li>
-     *       <li>2.2 缩小窗口，即 left 指针递减</li>
-     *     </ul>
-     *   </li>
+     * <li><b>情况 1：不存在重复元素</b>
+     * <ul>
+     * <li>1.1 将已遍历过的元素添加到集合中</li>
+     * <li>1.2 向右扩展窗口，即 right 指针递增</li>
+     * <li>1.3 计算最大长度，更新为 max = Math.max(max, right - left)</li>
+     * </ul>
+     * </li>
+     * <li><b>情况 2：存在重复元素</b>
+     * <ul>
+     * <li>2.1 从集合中删除已遍历过的元素，直到不存在重复元素</li>
+     * <li>2.2 缩小窗口，即 left 指针递减</li>
+     * </ul>
+     * </li>
      * </ul>
      */
     public int lengthOfLongestSubstring(String s) {
@@ -287,7 +301,7 @@ public class DoublePointSolution {
         if (s == null || s.length() == 0) {
             return 0;
         }
-        // 生命变量
+        // 声明变量
         int left = 0;
         int right = 0;
         int max = 0;
@@ -311,10 +325,14 @@ public class DoublePointSolution {
     /**
      * 9. 回文数
      * <p>
+     * 判断整数是否为回文数
+     * <p>
      * <ul>
-     *     <li>1. 负数和尾数为 0 的数： 首先，如果一个数是负数，或者除了 0 本身，末尾为 0 的数（如 10，120 等），不可能是回文数。</li>
-     *     <li>2. 逐步反转： 将整数的后半部分逐步反转并存储在 reversedHalf 中。每次都通过 x % 10 提取当前的最低位数字，并将其添加到 reversedHalf 的末尾。同时，x 去掉最低位。</li>
-     *     <li>3. 终止条件： 当 x 变得小于或等于 reversedHalf 时，说明已经处理了整数的一半。如果原始数字是偶数长度，则 x 应等于 reversedHalf；如果是奇数长度，则 x 应等于 reversedHalf / 10（因为中间的一位数字不影响回文性质）。</li>
+     * <li>1. 负数和尾数为 0 的数： 首先，如果一个数是负数，或者除了 0 本身，末尾为 0 的数（如 10，120 等），不可能是回文数。</li>
+     * <li>2. 逐步反转： 将整数的后半部分逐步反转并存储在 reversedHalf 中。每次都通过 x % 10 提取当前的最低位数字，并将其添加到
+     * reversedHalf 的末尾。同时，x 去掉最低位。</li>
+     * <li>3. 终止条件： 当 x 变得小于或等于 reversedHalf 时，说明已经处理了整数的一半。如果原始数字是偶数长度，则 x 应等于
+     * reversedHalf；如果是奇数长度，则 x 应等于 reversedHalf / 10（因为中间的一位数字不影响回文性质）。</li>
      * </ul>
      */
     public boolean isPalindrome(int x) {
@@ -337,9 +355,23 @@ public class DoublePointSolution {
     /**
      * 30. 串联所有单词的子串
      * <p>
-     * 1.	滑动窗口：使用滑动窗口的方式，不断移动 right 指针，同时动态地更新窗口中的内容。每次发现单词匹配时，只调整窗口大小，而不是重新遍历。
-     * 2.	左指针调整：如果某个单词出现次数超过应有次数时，左指针 left 向右移动，缩小窗口直到窗口内的子串符合要求。
-     * 3.	提前跳过不匹配：如果在遍历过程中，发现某个子串不属于 words，则立即清空 seenCount，并将 left 更新到 right，避免继续检查已经不可能匹配的子串。
+     * 例如，如果 words = ["ab","cd","ef"]， 那么 "abcdef"，
+     * "abefcd"，"cdabef"，"cdefab"，"efabcd"， 和
+     * "efcdab" 都是串联子串。 "acdbef" 不是串联子串，因为他不是任何 words 排列的连接。
+     * <p>
+     * 返回所有串联子串在 s 中的开始索引。
+     * 示例 1：
+     * 输入：s = "barfoothefoobarman", words = ["foo","bar"]
+     * 输出：[0,9]
+     * 解释：因为 words.length == 2 同时 words[i].length == 3，连接的子字符串的长度必须为 6。
+     * 子串 "barfoo" 开始位置是 0。它是 words 中以 ["bar","foo"] 顺序排列的连接。
+     * 子串 "foobar" 开始位置是 9。它是 words 中以 ["foo","bar"] 顺序排列的连接。
+     * 输出顺序无关紧要。返回 [9,0] 也是可以的。
+     * <p>
+     * 1. 滑动窗口：使用滑动窗口的方式，不断移动 right 指针，同时动态地更新窗口中的内容。每次发现单词匹配时，只调整窗口大小，而不是重新遍历。
+     * 2. 左指针调整：如果某个单词出现次数超过应有次数时，左指针 left 向右移动，缩小窗口直到窗口内的子串符合要求。
+     * 3. 提前跳过不匹配：如果在遍历过程中，发现某个子串不属于 words，则立即清空 seenCount，并将 left 更新到
+     * right，避免继续检查已经不可能匹配的子串。
      */
     public List<Integer> findSubstring(String s, String[] words) {
         List<Integer> res = new ArrayList<>();
@@ -486,21 +518,22 @@ public class DoublePointSolution {
         }
         // 定义双端队列，存储数组下标
         Deque<Integer> deque = new LinkedList<>();
+        // 定义结果集
         int[] res = new int[nums.length - k + 1];
         // 遍历数组
         for (int i = 0; i < nums.length; i++) {
-            // 收缩滑动窗口（当前窗口大于 k ）
+            // 1.移除队列头部过期元素，收缩滑动窗口（当前窗口大于 k ）
             int end = i;
             if (!deque.isEmpty() && end - deque.peekFirst() + 1 > k) {
                 deque.pollFirst();
             }
-            // 删除小于当前元素的下标，保证队列头部元素最大
+            // 2.维护单调递减队列，删除小于当前元素的下标
             while (!deque.isEmpty() && nums[i] > nums[deque.peekLast()]) {
                 deque.pollLast();
             }
-            // 直到当前元素小于等于队列末位元素（或队列空），将元素下标压入队列
+            // 3.添加当前元素，直到当前元素小于等于队列末位元素（或队列空），将元素下标压入队列
             deque.offerLast(i);
-            // 当前下标大于等于 k - 1，将队列头部下标加入结果集
+            // 4.收集结果，当前下标大于等于 k - 1，将队列头部下标加入结果集
             if (i >= k - 1) {
                 res[i - k + 1] = nums[deque.peekFirst()];
             }
@@ -511,20 +544,22 @@ public class DoublePointSolution {
     /**
      * 76. 最小覆盖子串
      * <p>
-     * 1.	目标字符计数：
-     * •	统计字符串 t 中每个字符的频率，存储在 tCount 中。
-     * •	使用 windowCount 动态记录当前窗口内的字符频率。
+     * 返回 s 中涵盖 t 所有字符的最小子串。如果 s 中不存在涵盖 t 所有字符的子串，则返回空字符串 ""
      * <p>
-     * 2.	双指针滑动窗口：
-     * •	右指针扩展窗口，将字符加入窗口并更新频率。
-     * •	左指针收缩窗口，当窗口内的字符覆盖 t 时，尝试找到更短的窗口。
+     * 1. 目标字符计数：
+     * • 统计字符串 t 中每个字符的频率，存储在 tCount 中。
+     * • 使用 windowCount 动态记录当前窗口内的字符频率。
      * <p>
-     * 3.	窗口合法性：
-     * •	使用 valid 变量记录窗口中完全匹配的字符个数。
-     * •	当 valid == tCount.size() 时，说明窗口内的字符覆盖了 t。
+     * 2. 双指针滑动窗口：
+     * • 右指针扩展窗口，将字符加入窗口并更新频率。
+     * • 左指针收缩窗口，当窗口内的字符覆盖 t 时，尝试找到更短的窗口。
      * <p>
-     * 4.	更新最小窗口：
-     * •	每次窗口满足条件时，记录当前窗口的起始位置和长度。
+     * 3. 窗口合法性：
+     * • 使用 valid 变量记录窗口中完全匹配的字符个数。
+     * • 当 valid == tCount.size() 时，说明窗口内的字符覆盖了 t。
+     * <p>
+     * 4. 更新最小窗口：
+     * • 每次窗口满足条件时，记录当前窗口的起始位置和长度。
      */
     public String minWindow(String s, String t) {
         // 处理边界

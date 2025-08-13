@@ -1,4 +1,4 @@
-package com.algo.advanced.dynamicProgramming;
+package com.algo.advanced.dynamicprogramming;
 
 import java.util.Arrays;
 import java.util.List;

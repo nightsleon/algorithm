@@ -52,7 +52,7 @@ src/com/algo/
 │   ├── twoPointers/             # 双指针技巧
 │   │   ├── DoublePointSolution.java
 │   │   └── README.md
-│   ├── binarySearch/            # 二分查找
+│   ├── binarysearch/            # 二分查找
 │   │   ├── BinarySearchSolution.java
 │   │   └── README.md
 │   ├── stack/                   # 栈和队列
@@ -60,7 +60,7 @@ src/com/algo/
 │   │   └── README.md
 │   └── README.md
 └── advanced/                    # 高级算法 (Hard)
-    ├── dynamicProgramming/      # 动态规划
+    ├── dynamicprogramming/      # 动态规划
     │   ├── DynamicProgressingSolution.java
     │   └── README.md
     ├── backtracking/            # 回溯算法
