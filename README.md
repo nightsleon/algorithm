@@ -49,8 +49,11 @@ src/com/algo/
 │   ├── hashmap/                 # 哈希表应用
 │   │   ├── HashMapSolution.java
 │   │   └── README.md
-│   ├── twoPointers/             # 双指针技巧
-│   │   ├── DoublePointSolution.java
+│   ├── twopointers/             # 双指针技巧
+│   │   ├── TwoPointersSolution.java
+│   │   └── README.md
+│   ├── slidingwindow/           # 滑动窗口
+│   │   ├── SlidingWindowSolution.java
 │   │   └── README.md
 │   ├── binarysearch/            # 二分查找
 │   │   ├── BinarySearchSolution.java
@@ -107,11 +110,12 @@ src/com/algo/
 
 **学习顺序**:
 1. **哈希表应用** (`intermediate/hashmap/`) - 哈希表技巧
-2. **双指针技巧** (`intermediate/twoPointers/`) - 双指针算法
-3. **链表操作** (`intermediate/linkedlist/`) - 链表数据结构
-4. **树结构** (`intermediate/tree/`) - 二叉树操作
-5. **二分查找** (`intermediate/binarySearch/`) - 二分查找技巧
-6. **栈和队列** (`intermediate/stack/`) - 栈队列应用
+2. **双指针技巧** (`intermediate/twopointers/`) - 双指针算法
+3. **滑动窗口** (`intermediate/slidingwindow/`) - 滑动窗口算法
+4. **链表操作** (`intermediate/linkedlist/`) - 链表数据结构
+5. **树结构** (`intermediate/tree/`) - 二叉树操作
+6. **二分查找** (`intermediate/binarysearch/`) - 二分查找技巧
+7. **栈和队列** (`intermediate/stack/`) - 栈队列应用
 
 **预计时间**: 4-6周
 
@@ -159,7 +163,7 @@ java -cp src com.algo.AlgorithmIndex
 | 难度级别 | 分类数量 | 算法数量 | 预计学习时间 |
 |---------|---------|---------|-------------|
 | 初级 (Easy) | 3 | 15+ | 2-3周 |
-| 中级 (Medium) | 6 | 25+ | 4-6周 |
+| 中级 (Medium) | 7 | 30+ | 4-6周 |
 | 高级 (Hard) | 8 | 30+ | 6-8周 |
 
 ## 📝 算法分类详情
@@ -206,10 +210,22 @@ java -cp src com.algo.AlgorithmIndex
 - 存在重复元素 (Contains Duplicate)
 
 ### 👆 双指针技巧 (Two Pointers)
-- 三数之和 (3Sum)
-- 盛最多水的容器 (Container With Most Water)
 - 验证回文串 (Valid Palindrome)
 - 判断子序列 (Is Subsequence)
+- 两数之和（排序数组）(Two Sum II)
+- 盛最多水的容器 (Container With Most Water)
+- 接雨水 (Trapping Rain Water)
+- 三数之和 (3Sum)
+- 回文数 (Palindrome Number)
+- 移动零 (Move Zeroes)
+
+### 🪟 滑动窗口 (Sliding Window)
+- 长度最小的子数组 (Minimum Size Subarray Sum)
+- 无重复字符的最长子串 (Longest Substring Without Repeating Characters)
+- 串联所有单词的子串 (Substring with Concatenation of All Words)
+- 找到字符串中所有字母异位词 (Find All Anagrams in a String)
+- 滑动窗口最大值 (Sliding Window Maximum)
+- 最小窗口子串 (Minimum Window Substring)
 
 ### 🔍 二分查找 (Binary Search)
 - 搜索插入位置 (Search Insert Position)
