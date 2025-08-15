@@ -1,65 +1,23 @@
 package com.algo.beginner.array;
 
 import java.util.*;
+
 /**
  * 难度级别: Beginner
  * 分类: Array
- * 
+ *
  * @author liangjun
  **/
 public class ArrayStrSolution {
-    public static void main(String[] args) {
-        int[] nums1 = new int[] { 1, 2, 3, 0, 0, 0 };
-        int[] nums2 = new int[] { 2, 5, 6 };
-        ArrayStrSolution solution = new ArrayStrSolution();
-        solution.merge(nums1, 3, nums2, 3);
-        // System.out.println(Arrays.toString(nums1));
-        int[] nums = new int[] { 0, 1, 2, 2, 3, 0, 4, 2 };
-        int removeElement = solution.removeElement(nums, 2);
-        // System.out.println(Arrays.toString(nums) + "\t" + removeElement);
-
-        int[] halfSortedNums = new int[] { 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 4 };
-        int removeDuplicates = solution.removeDuplicates(halfSortedNums);
-        // System.out.println(Arrays.toString(halfSortedNums) + "\t" +
-        // removeDuplicates);
-        nums = new int[] { 1, 2, 3, 4, 5, 6, 7 };
-        solution.rotate(nums, 3);
-        // System.out.println(Arrays.toString(nums));
-        String[] strs = new String[] { "flower", "flow", "flight" };
-        String longestCommonPrefix = solution.longestCommonPrefix(strs);
-        // System.out.println(longestCommonPrefix);
-        String str = "MCMXCIV";
-        int anInt = solution.romanToInt(str);
-        // System.out.println(anInt);
-        str = "luffy is still joyboy";
-        int lengthOfLastWord = solution.lengthOfLastWord(str);
-        // System.out.println(lengthOfLastWord);
-        String haystack = "aadbutsad", needle = "sad";
-        int strStr = solution.strStr(haystack, needle);
-        // System.out.println(strStr);
-        int[] prices = { 7, 1, 5, 3, 6, 4 };
-        int maxProfit = solution.maxProfit(prices);
-        // System.out.println(maxProfit);
-        int[] gas = { 1, 2, 3, 4, 5 };
-        int[] cost = { 3, 4, 5, 1, 2 };
-        int completeCircuit = solution.canCompleteCircuit(gas, cost);
-        // System.out.println(completeCircuit);
-
-        str = "  hello world  ";
-        String s = solution.reverseWords(str);
-        System.out.println(s);
-
-    }
 
     /**
      * 1.给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出和为目标值 target 的那两个整数，并返回它们的数组下标。
      * 你可以假设每种输入只会对应一个答案，并且你不能使用两次相同的元素。
      * 你可以按任意顺序返回答案。
-     * 
+     * <p>
      * 输入：nums = [2,7,11,15], target = 9
      * 输出：[0,1]
      * 解释：因为 nums[0] + nums[1] == 9 ，返回 [0, 1] 。
-     * 
      */
     public int[] twoSum(int[] numbers, int target) {
         // 使用哈希表存储数组元素及其索引
@@ -69,12 +27,12 @@ public class ArrayStrSolution {
             int another = target - numbers[i];
             // 如果另一个数在哈希表中，则返回两个数的索引
             if (map.containsKey(another)) {
-                return new int[] { map.get(another), i };
+                return new int[]{map.get(another), i};
             }
             // 将当前数及其索引添加到哈希表中
             map.put(numbers[i], i);
         }
-        return new int[] { -1, -1 };
+        return new int[]{-1, -1};
     }
 
     /**
@@ -109,24 +67,24 @@ public class ArrayStrSolution {
     /**
      * 27.移除元素
      * <p>
-     * 双指针解决方案
+     * 输入：nums = [0,1,2,2,3,0,4,2], val = 2
+     * 输出：5, nums = [0,1,4,0,3,_,_,_]
      * <p>
      * 给你一个数组 nums 和一个值 val，你需要 原地 移除所有数值等于 val 的元素。
      * 元素的顺序可能发生改变。然后返回 nums 中与 val 不同的元素的数量。
      */
     public int removeElement(int[] nums, int val) {
-        int slow = 0;
-        int fast = 0;
-        int len = nums.length;
-        while (fast < len) {
-            // 快指针元素不等于val，将其移动到慢指针位置
+        // slow 指针指向下一个要赋值的位置，fast 指针遍历数组
+        int slow = 0, fast = 0;
+        while (fast < nums.length) {
+            // 如果当前元素不等于 val，则保留该元素
             if (nums[fast] != val) {
-                // 移动快指针元素，慢指针右移
                 nums[slow++] = nums[fast];
             }
-            // 快指针始终右移动
+            // fast 指针始终右移
             fast++;
         }
+        // slow 即为新数组的长度
         return slow;
     }
 
@@ -134,30 +92,26 @@ public class ArrayStrSolution {
      * 26. 删除有序数组中的重复项
      * <p>
      * 给你一个 非严格递增排列 的数组 nums ，请你 原地 删除重复出现的元素，
-     * 使每个元素 只出现一次 ，返回删除后数组的新长度。元素的 相对顺序 应该保持 一致 。然后返回 nums 中唯一元素的个数。
+     * 使每个元素只出现一次，返回删除后数组的新长度。元素的 相对顺序 应该保持 一致 。然后返回 nums 中唯一元素的个数。
      * <p>
      * 输入：nums = [0,0,1,1,1,2,2,3,3,4]
      * 输出：5, nums = [0,1,2,3,4]
      */
     public int removeDuplicates(int[] nums) {
-        // 快慢指针
+        // 检查边界
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        // 双指针：slow指向下一个要填充的位置，fast遍历所有元素
         int slow = 1, fast = 1;
-        int len = nums.length;
-        while (fast < len) {
-            // 快指针值 ！= 慢指针上一个值
+        while (fast < nums.length) {
+            // 如果当前元素与前一个不重复，则复制到slow位置
             if (nums[fast] != nums[slow - 1]) {
-                // 将快指针值赋值给慢指针，并移动慢指针
                 nums[slow++] = nums[fast];
             }
-            // 快指针始终右移
             fast++;
         }
         return slow;
-    }
-
-    public int majorityElement(int[] nums) {
-        Arrays.sort(nums);
-        return nums[nums.length / 2];
     }
 
     /**
@@ -166,15 +120,15 @@ public class ArrayStrSolution {
      * 给定一个整数数组 nums，将数组中的元素向右轮转 k 个位置，其中 k 是非负数。
      */
     public void rotate(int[] nums, int k) {
-        // 1234 56 k=3 -> 56 1234
-        k %= nums.length;
         int len = nums.length;
+        // 1234 56 k=2 -> 56 1234
+        k %= len;
         // 翻转[0, len- k -1] 4321 56
         this.reverse(nums, 0, len - k - 1);
         // 翻转[len- k, len-1] 4321 65
-        this.reverse(nums, len - k, len - 1);
+        reverse(nums, len - k, len - 1);
         // 整体翻转 56 1234 done
-        this.reverse(nums, 0, len - 1);
+        reverse(nums, 0, len - 1);
     }
 
     private void reverse(int[] nums, int left, int right) {
@@ -187,6 +141,17 @@ public class ArrayStrSolution {
         }
     }
 
+    /**
+     * 14.最长公共前缀
+     * <p>
+     * 编写一个函数来查找字符串数组中的最长公共前缀，如果不存在公共前缀，返回空字符串 ""。
+     * <p>
+     * 输入：strs = ["flower","flow","flight"]
+     * 输出："fl"
+     *
+     * @param strs 字符串
+     * @return java.lang.String
+     */
     public String longestCommonPrefix(String[] strs) {
         // 排序，第一个元素长度最短，最后一个元素最长
         Arrays.sort(strs);
@@ -202,6 +167,21 @@ public class ArrayStrSolution {
         return sub.toString();
     }
 
+    /**
+     * 13. 罗马数字转整数
+     * <p>
+     * 通常情况下，罗马数字中小的数字在大的数字的右边。但也存在特例，例如 4 不写做 IIII，而是 IV。
+     * I 可以放在 V (5) 和 X (10) 的左边，来表示 4 和 9。
+     * X 可以放在 L (50) 和 C (100) 的左边，来表示 40 和 90。
+     * C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
+     * <p>
+     * 输入: s = "MCMXCIV"
+     * 输出: 1994
+     * 解释: M = 1000, CM = 900, XC = 90, IV = 4.
+     *
+     * @param s 罗马数字字符串
+     * @return int 整数
+     */
     public int romanToInt(String s) {
         Map<Character, Integer> map = new HashMap<>();
         map.put('I', 1);
@@ -225,19 +205,38 @@ public class ArrayStrSolution {
         return num;
     }
 
+    /**
+     * 58. 最后一个单词的长度
+     * <p>
+     * 给你一个字符串 s，由若干单词组成，单词前后用一些空格字符隔开。返回字符串中 最后一个 单词的长度
+     *
+     * @param s 字符串
+     * @return int 长度
+     */
     public int lengthOfLastWord(String s) {
         s = s.trim();
         int llw = 0;
         for (int i = s.length() - 1; i >= 0; i--) {
-            if (s.charAt(i) == ' ')
+            if (s.charAt(i) == ' ') {
                 break;
+            }
             llw++;
         }
         return llw;
     }
 
-    // haystack badbutsad 依次从 badbuts 开始遍历
-    // needle sad 从 s 开始遍历
+    /**
+     * 28. 找出字符串中第一个匹配项的下标
+     * <p>
+     * 输入：haystack = "sadbutsad", needle = "sad"
+     * 输出：0
+     * 解释："sad" 在下标 0 和 6 处匹配。
+     * 第一个匹配项的下标是 0 ，所以返回 0 。
+     *
+     * @param haystack 干草堆
+     * @param needle   缝衣针
+     * @return int
+     */
     public int strStr(String haystack, String needle) {
         int hLen = haystack.length(), nLen = needle.length();
         for (int hi = 0; hi <= hLen - nLen; hi++) {
@@ -249,21 +248,39 @@ public class ArrayStrSolution {
                     break;
                 }
             }
-            if (flag)
+            if (flag) {
                 return hi;
+            }
         }
         return -1;
     }
 
-    // int[] prices = {7, 1, 5, 3, 6, 4};
+    /**
+     * 121. 买卖股票的最佳时机
+     * <p>
+     * 给定一个数组 prices ，它的第 i 个元素 prices[i] 表示一支给定股票第 i 天的价格。
+     * 你只能选择 某一天 买入这只股票，并选择在 未来的某一个不同的日子 卖出该股票。设计一个算法来计算你所能获取的最大利润。
+     * <p>
+     * 输入：[7,1,5,3,6,4]
+     * 输出：5
+     * 解释：在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5
+     *
+     * @param prices 下标代表日期，值代表股价
+     * @return int 最大利润
+     */
     public int maxProfit(int[] prices) {
-        int cost = Integer.MAX_VALUE;
+        // 处理边界
+        if (prices == null || prices.length < 0) {
+            // 至少需要两天才能买卖
+            return 0;
+        }
         int maxProfit = 0;
-        for (int price : prices) {
-            // 更新前N天的买入股票的最低价格 cost
-            cost = Math.min(cost, price);
-            // 更新前N天最大利润， 前 N-1 天的最大利润与第 N 天卖出的利润取较大值
-            maxProfit = Math.max(price - cost, maxProfit);
+        int minPrice = Integer.MAX_VALUE;
+        for (int i = 0; i < prices.length; i++) {
+            // 更新历史最低价
+            minPrice = Math.min(minPrice, prices[i]);
+            // 更新最大利润
+            maxProfit = Math.max(maxProfit, prices[i] - minPrice);
         }
         return maxProfit;
     }
