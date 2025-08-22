@@ -305,4 +305,112 @@ public class HashMapSolution {
         return longestStreak;
     }
 
+    /**
+     * 13. 罗马数字转整数 - 从ArrayStrSolution移入
+     * <p>
+     * 通常情况下，罗马数字中小的数字在大的数字的右边。但也存在特例，例如 4 不写做 IIII，而是 IV。
+     * I 可以放在 V (5) 和 X (10) 的左边，来表示 4 和 9。
+     * X 可以放在 L (50) 和 C (100) 的左边，来表示 40 和 90。
+     * C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
+     * <p>
+     * 核心思想：HashMap映射 + 特殊情况处理
+     * 1. 使用HashMap存储每个罗马字符对应的数值
+     * 2. 遍历字符串，如果当前字符值小于下一个字符值，则减去当前值（特殊情况）
+     * 3. 否则加上当前值（正常情况）
+     * <p>
+     * 时间复杂度：O(n)，空间复杂度：O(1)
+     * <p>
+     * 输入: s = "MCMXCIV"
+     * 输出: 1994
+     * 解释: M = 1000, CM = 900, XC = 90, IV = 4.
+     */
+    public int romanToInt(String s) {
+        Map<Character, Integer> map = new HashMap<>();
+        map.put('I', 1);
+        map.put('V', 5);
+        map.put('X', 10);
+        map.put('L', 50);
+        map.put('C', 100);
+        map.put('D', 500);
+        map.put('M', 1000);
+        int len = s.length();
+        int num = 0;
+        for (int i = 0; i < len; i++) {
+            int val = map.get(s.charAt(i));
+            // i 不是最后一位，且 i 值 小于 i+1 值，则减去 i 的值
+            if (i < len - 1 && val < map.get(s.charAt(i + 1))) {
+                num -= val;
+            } else {
+                num += val;
+            }
+        }
+        return num;
+    }
+
+    /**
+     * 560. 和为 K 的子数组 - 从ArrayStrSolution移入
+     * <p>
+     * 给你一个整数数组 nums 和一个整数 k ，请你统计并返回该数组中和为 k 的子数组的个数 。
+     * 子数组是数组中元素的连续非空序列。
+     * <p>
+     * 核心思想：前缀和 + HashMap
+     * 1. 前缀和是从数组起点到当前下标元素的累加和，用于快速计算某一段子数组的总和
+     * 2. 假设 sum[i] 是从起点到下标 i 的前缀和，sum[j] 是从起点到下标 j 的前缀和（j > i）
+     * 3. 子数组 nums[i+1...j] 的和为 k，则有：sum[j] - sum[i] = k
+     * 4. 使用HashMap存储前缀和的出现次数，以快速查询是否存在满足条件的 sum[i]
+     * <p>
+     * 时间复杂度：O(n)，空间复杂度：O(n)
+     * <p>
+     * 输入：nums = [1,1,1], k = 2
+     * 输出：2
+     */
+    public int subarraySum(int[] nums, int k) {
+        // 处理边界
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        // 初始化前缀和，key=前缀和，value=频次
+        Map<Integer, Integer> prefixCount = new HashMap<>();
+        // 和为 0 的频次是 1
+        prefixCount.put(0, 1);
+        // 次数，map 中的 key
+        int prefixSum = 0;
+        int count = 0;
+        for (int num : nums) {
+            // 更新当前前缀和
+            prefixSum += num;
+            // sum[j] - sum[i] = k，符合条件，累加和
+            if (prefixCount.containsKey(prefixSum - k)) {
+                count += prefixCount.get(prefixSum - k);
+            }
+            // 更新前缀和及频次
+            prefixCount.put(prefixSum, prefixCount.getOrDefault(prefixSum, 0) + 1);
+        }
+        return count;
+    }
+
+    /**
+     * 560. 和为 K 的子数组 - 暴力解法（用于对比）
+     * <p>
+     * 时间复杂度：O(n²)，空间复杂度：O(1)
+     */
+    public int subarraySumBruteForce(int[] nums, int k) {
+        // 处理边界
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int sum = 0;
+            for (int j = i; j < nums.length; j++) {
+                sum += nums[j];
+                if (sum == k) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
 }

@@ -280,4 +280,187 @@ public class TwoPointersSolution {
             nums[slow++] = 0;
         }
     }
+
+    /**
+     * 88. 合并两个有序数组 - 从ArrayStrSolution移入
+     * <p>
+     * 给你两个按 非递减顺序 排列的整数数组 nums1 和 nums2，另有两个整数 m 和 n ，分别表示 nums1 和 nums2 中的元素数目。
+     * 请你 合并 nums2 到 nums1 中，使合并后的数组同样按 非递减顺序 排列。
+     * <p>
+     * 核心思想：逆向双指针
+     * 1. 从两个数组的末尾开始比较
+     * 2. 将较大的元素放到nums1的末尾
+     * 3. 避免了正向合并时需要移动元素的问题
+     * <p>
+     * 时间复杂度：O(m+n)，空间复杂度：O(1)
+     * <p>
+     * 类型：对撞指针（逆向）
+     * 输入：nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
+     * 输出：[1,2,2,3,5,6]
+     */
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        // 定义三指针
+        int p1 = m - 1;
+        int p2 = n - 1;
+        int p = m + n - 1;
+        // 遍历两个数组，将较大的值放到 p，并移动指针
+        while (p1 >= 0 && p2 >= 0) {
+            if (nums1[p1] > nums2[p2]) {
+                nums1[p--] = nums1[p1--];
+            } else {
+                nums1[p--] = nums2[p2--];
+            }
+        }
+        // nums2 还没有遍历完，继续填充到nums1中
+        while (p2 >= 0) {
+            nums1[p--] = nums2[p2--];
+        }
+    }
+
+    /**
+     * 27. 移除元素 - 从ArrayStrSolution移入
+     * <p>
+     * 给你一个数组 nums 和一个值 val，你需要 原地 移除所有数值等于 val 的元素。
+     * 元素的顺序可能发生改变。然后返回 nums 中与 val 不同的元素的数量。
+     * <p>
+     * 核心思想：快慢指针
+     * 1. slow指针指向下一个要赋值的位置
+     * 2. fast指针遍历数组
+     * 3. 当fast指向的元素不等于val时，将其复制到slow位置
+     * <p>
+     * 时间复杂度：O(n)，空间复杂度：O(1)
+     * <p>
+     * 类型：快慢指针
+     * 输入：nums = [0,1,2,2,3,0,4,2], val = 2
+     * 输出：5, nums = [0,1,4,0,3,_,_,_]
+     */
+    public int removeElement(int[] nums, int val) {
+        // slow 指针指向下一个要赋值的位置，fast 指针遍历数组
+        int slow = 0, fast = 0;
+        while (fast < nums.length) {
+            // 如果当前元素不等于 val，则保留该元素
+            if (nums[fast] != val) {
+                nums[slow++] = nums[fast];
+            }
+            // fast 指针始终右移
+            fast++;
+        }
+        // slow 即为新数组的长度
+        return slow;
+    }
+
+    /**
+     * 26. 删除有序数组中的重复项 - 从ArrayStrSolution移入
+     * <p>
+     * 给你一个 非严格递增排列 的数组 nums ，请你 原地 删除重复出现的元素，
+     * 使每个元素只出现一次，返回删除后数组的新长度。元素的 相对顺序 应该保持 一致 。
+     * <p>
+     * 核心思想：快慢指针
+     * 1. slow指向下一个要填充的位置
+     * 2. fast遍历所有元素
+     * 3. 当fast元素与前一个不重复时，复制到slow位置
+     * <p>
+     * 时间复杂度：O(n)，空间复杂度：O(1)
+     * <p>
+     * 类型：快慢指针
+     * 输入：nums = [0,0,1,1,1,2,2,3,3,4]
+     * 输出：5, nums = [0,1,2,3,4]
+     */
+    public int removeDuplicates(int[] nums) {
+        // 检查边界
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        // 双指针：slow指向下一个要填充的位置，fast遍历所有元素
+        int slow = 1, fast = 1;
+        while (fast < nums.length) {
+            // 如果当前元素与前一个不重复，则复制到slow位置
+            if (nums[fast] != nums[slow - 1]) {
+                nums[slow++] = nums[fast];
+            }
+            fast++;
+        }
+        return slow;
+    }
+
+    /**
+     * 151. 反转字符串中的单词 - 从ArrayStrSolution移入
+     * <p>
+     * 给你一个字符串 s ，请你反转字符串中 单词 的顺序。
+     * <p>
+     * 核心思想：双指针逆向遍历
+     * 1. 从字符串末尾开始，使用left和right指针标记每个单词的边界
+     * 2. 遇到非空格字符时，left指针向前移动到单词开始位置
+     * 3. 将单词添加到结果中，然后跳过空格继续处理下一个单词
+     * <p>
+     * 时间复杂度：O(n)，空间复杂度：O(n)
+     * <p>
+     * 类型：区间指针
+     * 输入：s = "the sky is blue"
+     * 输出："blue is sky the"
+     */
+    public String reverseWords(String s) {
+        // 去除字符串前后空格
+        s = s.trim();
+        StringBuilder result = new StringBuilder();
+        // 每个单词的左右区间指针 left 和 right
+        int right = s.length() - 1;
+        int left = right;
+        while (left >= 0) {
+            // 遍历当前单词，遇到空格结束
+            while (left >= 0 && s.charAt(left) != ' ') {
+                left--;
+            }
+            // 将单词添加到结果中
+            result.append(s.substring(left + 1, right + 1));
+            // 添加单词间空格，最后一个单词不用加
+            if (left > 0) {
+                result.append(" ");
+            }
+            // 遍历空格，遇到非空字符结束
+            while (left >= 0 && s.charAt(left) == ' ') {
+                left--;
+            }
+            // 开始下一个单词，单词指针归位
+            right = left;
+        }
+        return result.toString();
+    }
+
+    /**
+     * 151. 反转字符串中的单词 - 双端队列版本（用于对比）
+     * <p>
+     * 利用双端队列，每次将单词添加到头部实现翻转
+     * <p>
+     * 类型：字符遍历 + 双端队列
+     */
+    public String reverseWordsDeque(String s) {
+        // 处理边界
+        if (s == null || s.length() == 0) {
+            return "";
+        }
+        s = s.trim();
+
+        StringBuilder tmpWord = new StringBuilder();
+        Deque<String> deque = new ArrayDeque<>();
+        for (Character c : s.toCharArray()) {
+            // tmpWord 非空且当前单词结束，则加入队列头部
+            if (c == ' ') {
+                // 遇到空格，且 tmpWord 非空则加入队列头部
+                if (tmpWord.length() > 0) {
+                    deque.addFirst(tmpWord.toString());
+                    tmpWord = new StringBuilder();
+                }
+            } else {
+                // 遇到非空格则添加到 tmpWord
+                tmpWord.append(c);
+            }
+        }
+        // 最后一个单词
+        if (tmpWord.length() > 0) {
+            deque.addFirst(tmpWord.toString());
+        }
+
+        return String.join(" ", deque);
+    }
 }
