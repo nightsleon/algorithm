@@ -12,6 +12,10 @@ Intermediate
 - ThreeSum - 三数之和
 - IsPalindromeNumber - 回文数
 - MoveZeroes - 移动零
+- **Merge - 合并两个有序数组（从ArrayStrSolution移入）**
+- **RemoveElement - 移除元素（从ArrayStrSolution移入）**
+- **RemoveDuplicates - 删除有序数组中的重复项（从ArrayStrSolution移入）**
+- **ReverseWords - 反转字符串中的单词（从ArrayStrSolution移入）**
 
 ## 核心思想
 双指针技巧通过使用两个指针在数组或字符串中协同工作，通常能够将时间复杂度从 O(n²) 优化到 O(n)，是解决查找、比较等问题的强大工具。
